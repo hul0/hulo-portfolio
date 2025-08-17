@@ -1,13 +1,17 @@
-import { GoogleTagManager } from "@next/third-parties/google";
-import { Inter } from "next/font/google";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Footer from "./components/footer";
-import ScrollToTop from "./components/helper/scroll-to-top";
-import Navbar from "./components/navbar";
-import "./css/card.scss";
-import "./css/globals.scss";
-const inter = Inter({ subsets: ["latin"] });
+import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
+import './css/card.scss';
+import './css/globals.scss';
+import Footer from './components/footer';
+import Navbar from './components/navbar';
+import dynamic from 'next/dynamic'
+
+const ScrollToTop = dynamic(
+  () => import('./components/helper/scroll-to-top'),
+  { ssr: false }
+)
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: "Portfolio of Rupam Ghosh - Software Developer",
@@ -19,7 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastContainer />
+        <Toaster />
         <main className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
           <Navbar />
           {children}
@@ -27,7 +31,6 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
       </body>
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM} />
     </html>
   );
 }
